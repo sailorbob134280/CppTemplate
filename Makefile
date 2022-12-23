@@ -44,7 +44,7 @@ $(BUILD_PREFIX)/build.ninja:
 configure:
 	@echo "\nBUILD_PREFIX: $(BUILD_PREFIX)\n\n"
 
-	@meson --buildtype=$(BUILD_TYPE) $(BUILD_PREFIX)
+	@meson setup --buildtype=$(BUILD_TYPE) $(BUILD_PREFIX)
 
 # This needs to be separate for some reason
 test: $(BUILD_PREFIX)/build.ninja
