@@ -1,0 +1,85 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+            "label": "Make all",
+            "type": "shell",
+            "command": "make",
+            "group": {
+                "kind": "build",
+            }
+        },
+		{
+            "label": "Make debug",
+            "type": "shell",
+            "command": "make debug",
+            "group": {
+                "kind": "build",
+            }
+        },
+		{
+            "label": "Make release",
+            "type": "shell",
+            "command": "make release",
+            "group": {
+                "kind": "build",
+            }
+        },
+		{
+            "label": "Make test",
+            "type": "shell",
+            "command": "make test",
+            "group": {
+                "kind": "test",
+            }
+        },
+		{
+            "label": "Make coverage",
+            "type": "shell",
+            "command": "make coverage",
+            "group": {
+                "kind": "test",
+            }
+        },
+		{
+            "label": "Make docs",
+            "type": "shell",
+            "command": "make docs/html",
+            "group": {
+                "kind": "build",
+            }
+        },
+		{
+            "label": "Make clean",
+            "type": "shell",
+            "command": "make clean",
+            "group": {
+                "kind": "build",
+            }
+        },
+		{
+            "label": "Make spotless",
+            "type": "shell",
+            "command": "make spotless",
+            "group": {
+                "kind": "build",
+            }
+        },
+		{
+            "label": "Make scan",
+            "type": "shell",
+            "command": "make scan-build",
+            "group": {
+                "kind": "build",
+            }
+        },
+		{
+            "label": "Make sanitize",
+            "type": "shell",
+            "command": "make sanitize",
+            "group": {
+                "kind": "build",
+            }
+        },
+	]
+}
