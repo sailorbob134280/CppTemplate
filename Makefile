@@ -65,9 +65,6 @@ sanitize: $(BUILD_PREFIX)/build.ninja
 	meson configure $(BUILD_PREFIX) -Db_sanitize=address
 	ninja -C $(BUILD_PREFIX)
 
-clean:
-	-if [ -d $(BUILD_PREFIX) ]; then ninja -C $(BUILD_PREFIX) clean; fi
-
 spotless:
 	rm -r $(BUILD_PREFIX)
 	meson subprojects purge --confirm
