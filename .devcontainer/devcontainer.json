@@ -15,8 +15,8 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
-	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "cat /etc/os-release",
+	// The basic image doesn't have or need git, but we do to work in it
+	"postCreateCommand": "apt-get install -y git",
 
 	// Configure tool-specific properties.
 	"customizations": {

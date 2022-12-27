@@ -14,7 +14,7 @@ resources:
     username: ((gitea.username))
     password: ((gitea.password))
 
-- name: image-out
+- name: dev-image
   type: registry-image
   icon: docker
   source:
@@ -91,9 +91,10 @@ jobs:
       outputs:
       - name: image
       params:
-        CONTEXT: image-repo
+        CONTEXT: cpp-src
       run:
         path: build
-  - put: image-out
+
+  - put: dev-image
     params:
       image: image/image.tar
