@@ -1,0 +1,99 @@
+resources:
+- name: build-image
+  type: registry-image
+  icon: docker
+  source:
+    repository: gitea.shrukanslab.xyz/sl-devs/meson-build
+
+- name: cpp-src
+  type: git
+  icon: git
+  source:
+    uri: ((git-repo-url))
+    branch: main
+    username: ((gitea.username))
+    password: ((gitea.password))
+
+- name: image-out
+  type: registry-image
+  icon: docker
+  source:
+    repository: gitea.shrukanslab.xyz/sl-devs/((image-name))
+    tag: latest
+    username: ((gitea.username))
+    password: ((gitea.password))
+
+jobs:
+- name: unit
+  plan:
+  - in_parallel:
+    - get: build-image
+    - get: cpp-src
+      trigger: true
+  - task: run-test
+    image: build-image
+    config:
+      platform: linux
+      inputs:
+      - name: cpp-src
+        path: "./"
+      run:
+        path: make
+        args: ["test"]
+
+- name: coverage
+  plan:
+  - in_parallel:
+    - get: build-image
+    - get: cpp-src
+      trigger: true
+  - task: run-test
+    image: build-image
+    config:
+      platform: linux
+      inputs:
+      - name: cpp-src
+        path: "./"
+      run:
+        path: make
+        args: ["coverage"]
+
+- name: docs
+  plan:
+  - in_parallel:
+    - get: build-image
+    - get: cpp-src
+      trigger: true
+  - task: run-test
+    image: build-image
+    config:
+      platform: linux
+      inputs:
+      - name: cpp-src
+        path: "./"
+      run:
+        path: make
+        args: ["configure", "docs/html"]
+
+- name: build-image
+  plan:
+  - get: cpp-src
+  - task: build-image
+    privileged: true # oci-build-task must run in a privileged container
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: concourse/oci-build-task
+      inputs:
+      - name: cpp-src
+      outputs:
+      - name: image
+      params:
+        CONTEXT: image-repo
+      run:
+        path: build
+  - put: image-out
+    params:
+      image: image/image.tar
