@@ -1,0 +1,25 @@
+name: Build Docs
+run-name: ${{ gitea.ref }} Build
+on:
+  push:
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    container: gitea.shrukanslab.xyz/CppTemplate/dev-environment:latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Build docs
+        run: just docs
+
+      - name: Compress docs
+        run: tar -czf build/docs.tar.gz build/docs
+
+      - name: Archive docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: build/docs.tar.gz
+          retention-days: 5
