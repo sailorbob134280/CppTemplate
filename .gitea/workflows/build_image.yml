@@ -30,7 +30,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            gitea.shrukanslab.xyz/cpp-template/dev-environment:latest
+            gitea.shrukanslab.xyz/sl-devs/cpp-template/dev-environment:latest
 
       - name: Logout from Docker Registry
         run: docker logout gitea.shrukanslab.xyz

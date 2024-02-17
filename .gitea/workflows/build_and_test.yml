@@ -6,7 +6,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: gitea.shrukanslab.xyz/cpp-template/dev-environment:latest
+    container: gitea.shrukanslab.xyz/sl-devs/cpp-template/dev-environment:latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -16,7 +16,7 @@ jobs:
 
   coverage:
     runs-on: ubuntu-latest
-    container: gitea.shrukanslab.xyz/cpp-template/dev-environment:latest
+    container: gitea.shrukanslab.xyz/sl-devs/cpp-template/dev-environment:latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -36,7 +36,7 @@ jobs:
 
   static_analysis:
     runs-on: ubuntu-latest
-    container: gitea.shrukanslab.xyz/cpp-template/dev-environment:latest
+    container: gitea.shrukanslab.xyz/sl-devs/cpp-template/dev-environment:latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -46,7 +46,7 @@ jobs:
 
   sanitize:
     runs-on: ubuntu-latest
-    container: gitea.shrukanslab.xyz/cpp-template/dev-environment:latest
+    container: gitea.shrukanslab.xyz/sl-devs/cpp-template/dev-environment:latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
