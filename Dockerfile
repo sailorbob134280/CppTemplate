@@ -8,6 +8,9 @@ RUN pip install --break-system-packages meson gcovr
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/bin
 
+# Install node for actions
+RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && apt-get install -y nodejs
+
 # Install latest doxygen
 RUN wget --progress=bar:force:noscroll https://www.doxygen.nl/files/doxygen-1.10.0.linux.bin.tar.gz && \
     tar -xzf doxygen-1.10.0.linux.bin.tar.gz && \
