@@ -1,26 +1,28 @@
-# Set default values for variables. Justfile doesn't support dynamic defaulting in
-# the same way Make does, so we have to handle it within the command executions.
-
 # Default build prefix and type
 BUILD_PREFIX := "./build"
 BUILD_TYPE := "release"
 set positional-arguments
 
-# Set up the actual BUILD_PREFIX based on the presence of the directory
-#BUILD_PREFIX := `mkdir -p {{BUILD_PREFIX}} && cd {{BUILD_PREFIX}} && pwd`
+# List all available targets
+default:
+  just --list
 
-default: build
-
+# Build and run the development environment
 dev:
   docker build -t dev-container -f Dockerfile .
+  # Note: running with the volumes mounted in the same directory allows clangd to work
   docker run -it --rm -v $(pwd):$(pwd) dev-container -c "cd $(pwd) && /bin/zsh"
+
+# Bootstrap the project when cloning for the first time by installing git hooks and others
+bootstrap:
+  pre-commit install --hook-type commit-msg --hook-type pre-push
 
 # Recipe to configure the build environment
 configure:
   @echo "\nBUILD_PREFIX: {{BUILD_PREFIX}}\n\n"
   meson setup --buildtype={{BUILD_TYPE}} {{BUILD_PREFIX}}
 
-# Default build target
+# Build a target, or default if none is specified
 build target="": configure
   ninja -C {{BUILD_PREFIX}} {{target}}
 
@@ -32,7 +34,7 @@ test: build
 coverage: test
   ninja -C {{BUILD_PREFIX}} coverage
 
-# Debug build
+# Debug buildoutdated
 debug: 
   meson configure {{BUILD_PREFIX}} --buildtype=debug
   ninja -C {{BUILD_PREFIX}}
@@ -46,6 +48,7 @@ release:
 sanitize: 
   meson configure {{BUILD_PREFIX}} -Db_sanitize=address
   ninja -C {{BUILD_PREFIX}}
+  ninja -C {{BUILD_PREFIX}} test
 
 # Static analysis
 check:
