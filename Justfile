@@ -9,11 +9,12 @@ default:
 
 # Build and run the development environment
 dev:
+  # For flexibility, we just build it locally. This can be edited to pull from a remote image
   docker build -t dev-container -f Dockerfile .
   # Note: running with the volumes mounted in the same directory allows clangd to work
   docker run -it --rm -v $(pwd):$(pwd) dev-container -c "cd $(pwd) && /bin/zsh"
 
-# Bootstrap the project when cloning for the first time by installing git hooks and others
+# Bootstrap the project when cloning for the first time by installing git hooks
 bootstrap:
   pre-commit install --hook-type commit-msg --hook-type pre-push
 
@@ -26,7 +27,7 @@ configure:
 build target="": configure
   ninja -C {{BUILD_PREFIX}} {{target}}
 
-# Test recipe
+# Run the unit tests
 test: build
   ninja -C {{BUILD_PREFIX}} test
 
@@ -34,7 +35,7 @@ test: build
 coverage: test
   ninja -C {{BUILD_PREFIX}} coverage
 
-# Debug buildoutdated
+# Debug build
 debug: 
   meson configure {{BUILD_PREFIX}} --buildtype=debug
   ninja -C {{BUILD_PREFIX}}
@@ -44,7 +45,7 @@ release:
   meson configure {{BUILD_PREFIX}} --buildtype=release
   ninja -C {{BUILD_PREFIX}}
 
-# Sanitize build
+# Run tests with address sanitizer
 sanitize: 
   meson configure {{BUILD_PREFIX}} -Db_sanitize=address
   ninja -C {{BUILD_PREFIX}}

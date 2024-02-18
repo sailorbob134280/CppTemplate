@@ -1,25 +1,29 @@
 # ${REPO_NAME_PASCAL}
 
-![CI](https://concourse.shrukanslab.xyz/api/v1/teams/sl-devs/pipelines/cpp-template/badge)
-
 ${REPO_DESCRIPTION}
 
 ## Build Instructions
+
 The provided Docker image includes all necessary dependencies to build and debug
-C/C++ applications. While the main build system is Meson, a Makefile is provided
+C/C++ applications. While the main build system is Meson, a Justfile is provided
 for convenience. With dependencies installed, or inside the Docker container, run
 the following:
 
-- `make` to build the application
-- `make test` to run all configured tests
-- `make coverage` to run tests and generate coverage reports
-- `make debug` to compile with debug flags
-- `make release` to compile with release optimization (default)
-- `make sanitize` to compile with address sanitizer
-- `make scan-build` to run LLVM scan-build, if installed (not by default in the docker image)
-- `make docs/html` to build the HTML Doxygen documentation
-- `make clang-format` to run the autoformatter
-- `make clean` to delete artifacts from the build directory
-- `make spotless` to delete the build directory altogether and purge subprojects
-
-All other targets are passed directly to the Ninja backend.
+```
+Available recipes:
+    bootstrap       # Bootstrap the project when cloning for the first time by installing git hooks
+    build target="" # Build a target, or default if none is specified
+    check           # Static analysis
+    clean           # Clean the build directory
+    configure       # Recipe to configure the build environment
+    coverage        # Coverage recipe
+    debug           # Debug build
+    default         # List all available targets
+    dev             # Build and run the development environment
+    docs            # Build the documentation
+    format          # Run the autoformatter
+    release         # Release build
+    sanitize        # Run tests with address sanitizer
+    spotless        # Obliterate the build directory
+    test            # Run the unit tests
+```
