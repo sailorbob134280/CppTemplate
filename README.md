@@ -4,10 +4,7 @@ ${REPO_DESCRIPTION}
 
 ## Build Instructions
 
-The provided Docker image includes all necessary dependencies to build and debug
-C/C++ applications. While the main build system is Meson, a Justfile is provided
-for convenience. With dependencies installed, or inside the Docker container, run
-the following:
+The provided Docker image includes all necessary dependencies to build and debug C/C++ applications. While the main build system is Meson, a Justfile is provided for convenience. With dependencies installed, or inside the Docker container, run the following:
 
 ```
 Available recipes:

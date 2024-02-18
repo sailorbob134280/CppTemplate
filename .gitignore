@@ -4,3 +4,5 @@ builddir/
 subprojects/**
 !subprojects/*.wrap
 !subprojects/.clang-format
+
+.cache/

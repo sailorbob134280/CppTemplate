@@ -1,7 +1,7 @@
 FROM gcc:13
 
 # Install build tools
-RUN apt-get update && apt-get install -y python3 python3-pip ninja-build clang-format clang-tidy gdb graphviz git curl zsh \
+RUN apt-get update && apt-get install -y python3 python3-pip ninja-build clang-format clang-tidy gdb openjdk-17-jdk-headless graphviz git curl zsh \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --break-system-packages meson gcovr
@@ -18,6 +18,9 @@ RUN wget -O mold.tar.gz https://github.com/rui314/mold/releases/download/v2.4.0/
 # Set mold as the default linker
 ENV CC_LD=mold
 ENV CXX_LD=mold
+
+# Install plantuml
+RUN wget --progress=bar:force:noscroll https://github.com/plantuml/plantuml/releases/download/v1.2024.3/plantuml-mit-1.2024.3.jar -O /usr/local/bin/plantuml.jar
 
 # Install node for actions
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && apt-get install -y nodejs
