@@ -28,9 +28,9 @@ jobs:
         run: tar -czf build/coverage.tar.gz build/meson-logs/coveragereport
 
       - name: Archive coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
-          name: docs
+          name: coverage_report
           path: build/coverage.tar.gz
           retention-days: 5
 
@@ -41,6 +41,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Configure
+        run: just configure
+
       - name: Static analysis
         run: just check
 
@@ -50,6 +53,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: Configure
+        run: just configure
 
       - name: Sanitize
         run: just sanitize

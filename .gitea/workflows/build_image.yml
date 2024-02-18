@@ -2,6 +2,8 @@ name: Build Image
 run-name: ${{ gitea.ref }} Build
 on:
   push:
+    branches:
+      - main
 
 jobs:
   build-dev-image:
