@@ -8,6 +8,17 @@ RUN pip install --break-system-packages meson gcovr
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/bin
 
+# Install mold from tarball, as the version in the package manager is very old
+RUN wget -O mold.tar.gz https://github.com/rui314/mold/releases/download/v2.4.0/mold-2.4.0-x86_64-linux.tar.gz && \
+    tar -xzf mold.tar.gz && \
+    cp -r mold-2.4.0-x86_64-linux/* /usr/local/ && \
+    rm -r mold-2.4.0-x86_64-linux && \
+    rm mold.tar.gz
+
+# Set mold as the default linker
+ENV CC_LD=mold
+ENV CXX_LD=mold
+
 # Install node for actions
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && apt-get install -y nodejs
 
