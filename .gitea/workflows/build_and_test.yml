@@ -14,6 +14,11 @@ jobs:
       - name: Unit test
         run: just test
 
+      - name: Compress test report
+        run: tar -czf build/test_logs.tar.gz build/meson-logs
+
+      - name: Archive test report
+
   coverage:
     runs-on: ubuntu-latest
     container: gitea.shrukanslab.xyz/sl-devs/cpp-template/dev-environment:latest
