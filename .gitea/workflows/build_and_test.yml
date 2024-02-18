@@ -18,6 +18,11 @@ jobs:
         run: tar -czf build/test_logs.tar.gz build/meson-logs
 
       - name: Archive test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_logs
+          path: build/test_logs.tar.gz
+          retention-days: 5
 
   coverage:
     runs-on: ubuntu-latest
