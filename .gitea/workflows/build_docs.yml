@@ -2,14 +2,20 @@ name: Build Docs
 run-name: ${{ gitea.ref }} Build
 on:
   push:
+    branches:
+      - main
 
 jobs:
   build-docs:
     runs-on: ubuntu-latest
+
     container: gitea.shrukanslab.xyz/sl-devs/cpp-template/dev-environment:latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+
+      - name: Configure
+        run: just configure
 
       - name: Build docs
         run: just docs
@@ -18,7 +24,7 @@ jobs:
         run: tar -czf build/docs.tar.gz build/docs
 
       - name: Archive docs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: docs
           path: build/docs.tar.gz
